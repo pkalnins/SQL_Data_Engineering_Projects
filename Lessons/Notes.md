@@ -178,6 +178,8 @@ Manipulate data within tables
     - Best for targeted deletes
     DELETE FROM table_name
     WHERE condition; 
+
+- MERGE
     
 
 **DDL** 
@@ -242,7 +244,7 @@ FROM
     ) AS data_engineering_jobs
 ```
 
-CTE's
+### Common Table Expressions (CTE's)
 ```sql
 WITH data_engineer_jobs AS (
     SELECT *
@@ -253,3 +255,11 @@ SELECT *
 FROM data_engineer_jobs
 
 ```
+CTE: a temporary result set that you can reference within: 
+- FROM: used like a table
+- JOIN: join it to any other table
+- Other CTE's: later CTE's can reference earlier ones
+- SELECT/INSERT/UPDATE/DELETE: main statement
+
+`WITH`: used to define CTE at the beginning of a query 
+Exists only during the execution of a query
