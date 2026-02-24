@@ -263,3 +263,144 @@ CTE: a temporary result set that you can reference within:
 
 `WITH`: used to define CTE at the beginning of a query 
 Exists only during the execution of a query
+
+
+## Data Modeling
+
+Database -> Schema -> Tables 
+
+ERD Diagrams
+Star schemas
+Primary & foreign keys
+Relationships: one-to-one, one-to-many, etc. 
+
+*Why is Data Modeling Important?*
+- Different sources use different designs
+- Modeling brings structure & consistency
+- Can combine individual databases into a single data warehouse
+
+Pipeline: 
+Source system -> ELT -> Analytical systems (data warehouse, etc.)
+
+Common Analytical Systems:
+- Data warehouse
+- Data Mart
+- Data lakehouse
+
+Common source systems: 
+- ERP systems (Enterprise resource planning)
+    - Purpose: Run the entire business
+    - Focus: back-end operations
+    - Core modules: 
+        - Finance: GL, AP, AR, budgeting
+        - Supply chain: inventory, procurement
+        - HR: payroll, benefits
+    - Data role: system of record for operational truth
+    - Question it answers: "How is the business running internally?"
+
+- CRM systems (Customer relationship management)
+    - Purpose: grow revenue
+    - Focus: front-office interactions
+    - Core modules: 
+        - Sales: leads, opportunities, pipelines
+        - Marketing: campaigns, attribution
+        - Support: tickets, customer success
+    - Data role: system of engagement
+    - Question it answers: "How do we acquire, convert, and retain customers?"
+
+- App backend
+- Normalized tables 
+
+All these solutions use specific databases (e.g. Oracle database, PostgreSQL, SAPHana, etc.)
+
+Choosing a database
+**OLTP (Online transaction processing)**
+- Purpose: operate apps and capture live transactions
+- Optimized for: high-velocity writes, low-latency point reads
+- Structure: many narrow, related tables; strict FK's; minimal redundancy
+- Examples: SQLite, PostgreSQL, MySQL, MS SQL Server, Oracle, MariaDB
+
+**OLAP (Online analytical processing)**
+- Purpose: analyze historical data and report
+- Optimized for: large scans, aggregations, filters, time-series
+- Structure: fact tables (measures) + dimension tables (who/what/when/where)
+- Examples: DuckDB, GCP BigQuery, Amazon Redshit, Databricks, Snowflake, Clickhouse
+
+Core Design Patterns (7)
+
+1. Star Schema
+    - One central fact table, surrounded by dimension tables
+    - Most popular within analytical systems (OLAP)
+
+2. Normalized Schema
+    - Data split into multiple related tables
+    - Often hundreds of different tables linked together
+    - Most popular within transaction systems (OLTP)
+
+3. Constellation/Galaxy Schema
+    - A type of star schema: multiple star schemas
+    - Used in enterprise companies with many teams
+    - Each fact table specific to a specific team
+
+4. Snowflake Schema
+    - Variation of star schema
+    - Central fact table, dim tables with their own stars
+    - More common in legacy schemas
+
+5. Factless Fact Table
+    - Another variation of star schema
+    - Central table only contains Id's (no numerical measures)
+
+6. Bridge Table
+    - Helps resolve many-many relationships by acting a as intermediary 
+
+7. Flat (Wide) Table
+    - Take a star schema -> convert to a single table
+    - Common in reporting tools 
+
+
+### Maintaining Data Models
+Slowly changing dimensions (SCD)
+- Type 0 - 6 changes
+- Type 0: fixed dimension,can't overwrite
+- Type 1: overwrite
+- Type 2: add new row
+- Type 3: add new attribute (column)
+- Type 4: history table 
+- Type 5 & 6 are hybrids of the above
+
+
+## CASE Expressions
+
+```sql
+CASE
+    WHEN condition_1 THEN result_1
+    [ WHEN condition_2 THEN result_2 ]
+    [ ELSE result_default ]
+END
+```
+Can use inside a SELECT, etc. 
+
+Example: 
+```sql
+SELECT
+    CASE
+        WHEN salary_hour_avg > 40
+            THEN 'High Salary'
+        ELSE 'Low Salary'
+    END AS salary_category
+FROM job_postings
+```
+
+4 popular use cases: 
+
+- Bucketing data: group values in ranges (`CASE WHEN salary <25`)
+- Handling NULL data: handle NULLs explicitly (`CASE WHEN salary IS NULL`)
+- Categorizing values: normalize inconsistent text (`CASE WHEN job_title LIKE '%Analyst%' THEN 'Data Analyst'`)
+- Conditional aggregation: aggregate subsets into one query (`COUNT(CASE WHEN salary IS NOT NULL THEN 1 END)`)
+
+
+
+
+
+
