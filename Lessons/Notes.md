@@ -399,8 +399,114 @@ FROM job_postings
 - Categorizing values: normalize inconsistent text (`CASE WHEN job_title LIKE '%Analyst%' THEN 'Data Analyst'`)
 - Conditional aggregation: aggregate subsets into one query (`COUNT(CASE WHEN salary IS NOT NULL THEN 1 END)`)
 
+## SET Operators
+6 SET operators
+
+Examples: 2 tables (A and B)
+
+`UNION`
+- Returns all rows from A and B
+- Duplicates removed
+
+`UNION ALL`
+- Returns all rows from A and B
+- Duplicates preserved
+
+`INTERSECT`
+- Returns rows common to A and B
+- Duplicates removed
+
+`INTERSECT ALL`
+- Returns rows common to A and B
+- Duplicates preserved
+
+`EXCEPT`
+- Returns rows in A but not in B
+- Duplicates removed
+
+`EXCEPT ALL`
+- Returns rows in A but not in B
+- Duplicates removed one-for-one
+
+## Text Functions 
+Many text functions! 
+
+6 major functions: 
+1. Length & Count
+    `LENGTH('SQL')`
+    `CHAR_LENGTH('SQL')`
+
+2. Case conversion
+    `UPPER('sql')`
+    `LOWER('SQL')`
+
+3. Substring/Extraction
+    `LEFT('SQL',2)` --> 'SQ'
+    `RIGHT('SQL',2)` --> 'QL'
+    `SUBSTRING('SQL',2,1)` --> 'Q'
+
+4. Concatenation
+    `CONCAT('SQL','-','functions')` --> 'SQL-functions'
+    'SQL'||'-'||'functions' --> 'SQL-functions'
+
+5. Trimming
+    `TRIM(' SQL ')` --> 'SQL'
+    `LTRIM(' SQL ')` --> 'SQL '
+    `RTRIM(' SQL ')` --> ' SQL'
+
+6. Replacement
+    `REPLACE('SQL','Q','_')` --> 'S_L'
+    `REGEX_REPLACE('SQL','[A-Z]+','sql')` --> 'sql'
 
 
+## NULL Functions
+
+1. `NULLIF`
+    Returns NULL if values are equal 
+    Syntax: `NULLIF(expression1, expression2)
+
+2. `COALESCE`
+    Returns first non-NULL value
+    Syntax: COALESCE(value1, value2, ..., valueN)
+
+
+
+## Window Functions
+Aggregate at row level 
+Let you add context without destroying rows
+- Pipelines need row-level data
+- Aggregations collapse rows
+- Window functions keep rows AND add insight
+
+Core syntax: 
+```sql
+SELECT
+    column_1, 
+    window_function() OVER (
+        PARTITION BY <...>
+        ORDER BY <...>
+    ) AS window_column_alias
+FROM 
+    table_name
+```
+
+3 major types of window functions: 
+1. Aggregate
+    `AVG()` `MAX()` `MIN()` `SUM()` `COUNT()`
+
+2. Row & rank
+    `ROW_NUMBER()`
+    `RANK()`
+    `DENSE_RANK()`
+    `PERCENT_RANK()`
+    `NTILE()`
+
+3. Navigation 
+    `LAG()`
+    `LEAD()`
+    `FIRST_VALUE()`
+    `LAST_VALUE()`
+    `NTH_VALUE()`
 
 
 
