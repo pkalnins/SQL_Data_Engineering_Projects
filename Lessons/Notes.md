@@ -3,20 +3,25 @@
 [MotherDuckApp](https://app.motherduck.com/)
 
 CRUD Operations: 
+
 - Create (SQL: Create)
 - Read (SQL: Select)
 - Update (SQL: Update)
 - Delete (SQL: Delete)
 
 Three types of SQL language: 
+
 - DQL: Data query language
 	- Read databases
+
 - DML: Data manipulation language
 	- Update/delete data
+
 - DDL: Data definition language
 	- Create new database
 
 Databases: 
+
 - Location
 	- Local
 	- Cloud
@@ -507,6 +512,16 @@ FROM
     `FIRST_VALUE()`
     `LAST_VALUE()`
     `NTH_VALUE()`
+
+## Nested Data Types
+Allows multiple values in a single column 
+
+- ARRAY/LIST []
+- STRUCT/RECORD/ROW {skill:'python', level:'advanced'}
+- Array of Structs [{skill:'python', level:'advanced'}, {...}, etc]
+- Map/Object/Dictionary
+- JSON
+
 
 
 
