@@ -2,7 +2,7 @@
 
 An end-to-end data engineering pipeline that transforms raw CSV files from Google Cloud Storage into a normalized star schema data warehouse, then builds analytical data marts. 
 
-![Data Pipeline Architecture](../images/1_2_Project2_Data_Pipeline.png)
+![Data Pipeline Architecture](../Images/1_2_Project2_Data_Pipeline.png)
 
 
 ## Executive Summary
@@ -35,30 +35,17 @@ Raw job posting data arrives as flat CSV files in Google Cloud Storage—not str
 - 📦 **Version Control**: Git/GitHub for versioned pipeline scripts
 - ☁️ **Storage**: Google Cloud Storage for source CSV files
 
-## Repository Structure 
-
-2_WH_Mart_Build/
-├── 01_create_tables_dw.sql        # Star schema DDL
-├── 02_load_schema_dw.sql          # GCS data extraction & loading
-├── 03_create_flat_mart.sql        # Denormalized flat mart
-├── 04_create_skills_mart.sql      # Skills demand mart
-├── 05_create_priority_mart.sql    # Priority roles mart
-├── 06_update_priority_mart.sql    # Priority mart incremental update (MERGE)
-├── 07_create_company_mart.sql     # Company hiring mart (optional)
-├── build_dw_marts.sql             # Master SQL build script
-└── README.md                       # You are here
-
 
 ### Pipeline Architecture 
 
-![Data Pipeline Architecture](../images/1_2_Project2_Data_Pipeline.png)
+![Data Pipeline Architecture](../Images/1_2_Project2_Data_Pipeline.png)
 
 The pipeline transforms job posting CSVs from Google Cloud Storage into a normalized star schema data warehouse, then builds specialized analytical data marts. BI tools (Excel, Power BI, Tableau, Python) consume from both the warehouse and marts.
 
 ### Data Warehouse
 The data warehouse implements a star schema with `company_dim`, `skills_dim`, `job_postings_fact`, and `skills_job_dim` tables.
 
-![Data Warehouse](../images/1_2_Data_Warehouse.png)
+![Data Warehouse](../Images/1_2_Data_Warehouse.png)
 
 - SQL Files:
     - `01_create_tables_dw.sql` – Defines star schema with 4 core tables
@@ -69,7 +56,7 @@ The data warehouse implements a star schema with `company_dim`, `skills_dim`, `j
 ### Flat Mart
 Denormalized table with all dimensions for ad-hoc queries.
 
-![Flat Mart](../images/1_2_Flat_Mart.png)
+![Flat Mart](../Images/1_2_Flat_Mart.png)
 
 - **SQL File**: `03_create_flat_mart.sql` – Builds denormalized table with all dimensions joined
 - **Purpose**: Denormalized table for quick ad-hoc queries
@@ -78,7 +65,7 @@ Denormalized table with all dimensions for ad-hoc queries.
 ### Skills Mart
 Time-series skill demand analysis with additive measures.
 
-![Skills Mart](../images/1_2_Skills_Mart.png)
+![Skills Mart](../Images/1_2_Skills_Mart.png)
 
 - **SQL File**: `04_create_skills_mart.sql` – Builds time-series skill demand mart
 - **Purpose**: Time-series analysis of skill demand over time with additive measures
@@ -88,7 +75,7 @@ Time-series skill demand analysis with additive measures.
 ### Priority Mart
 Priority role tracking with incremental updates using MERGE operations.
 
-![Priority Mart](../images/1_2_Priority_Mart.png)
+![Priority Mart](../Images/1_2_Priority_Mart.png)
 
 - **SQL Files:**
     - `05_create_priority_mart.sql` – Initial build of priority roles and jobs snapshot
